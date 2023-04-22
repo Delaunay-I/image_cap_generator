@@ -45,46 +45,6 @@ for i, caption in enumerate(df_txt.caption.values):
     df_txt.loc[i, "caption"] = text_clean(caption)
 
 
-def df_word(df_txt):
-    vocabulary = []
-    for txt in df_txt.caption.values:
-        vocabulary.extend(txt.split())
-    print('Vocabulary Size: %d' % len(set(vocabulary)))
-    ct = Counter(vocabulary)
-    dfword = pd.DataFrame({"word":ct.keys(),"count":ct.values()})
-    dfword = dfword.sort_values(by="count",ascending=False)
-    dfword = dfword.reset_index()[["word","count"]]
-    return(dfword)
-dfword = df_word(df_txt)
-dfword.head(3)
-
-
-# In[9]:
-
-
-topn = 50
-
-def plthist(dfsub, title="The top 50 most frequently appearing words"):
-    plt.figure(figsize=(20,3))
-    plt.bar(dfsub.index,dfsub["count"])
-    plt.yticks(fontsize=20)
-    plt.xticks(dfsub.index,dfsub["word"],rotation=90,fontsize=20)
-    plt.title(title,fontsize=20)
-    plt.show()
-
-plthist(dfword.iloc[:topn,:],
-        title="The top 50 most frequently appearing words")
-plthist(dfword.iloc[-topn:,:],
-        title="The least 50 most frequently appearing words")
-
-
-# # Data prepration
-# prepare text and image separately
-
-# In[10]:
-
-
-from copy import copy
 def add_start_end_seq_token(captions):
     caps = []
     for txt in captions:
@@ -97,10 +57,6 @@ df_txt.head(5)
 
 
 # # split the dataset int train and test splits
-
-# In[11]:
-
-
 from sklearn.model_selection import train_test_split
 
 # create a list of unique image file names in your DataFrame (df_txt) using the unique method of pandas:
