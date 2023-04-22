@@ -1,12 +1,9 @@
 import matplotlib.pyplot as plt
 import tensorflow as tf
-import sys, time, os, warnings 
 import numpy as np
 import pandas as pd 
 from collections import Counter 
 
-print("python {}".format(sys.version))
-print("tensorflow version {}".format(tf.__version__))
 
 def set_seed(sd=123):
     from numpy.random import seed
@@ -20,7 +17,6 @@ def set_seed(sd=123):
     set_random_seed(sd)
 
 
-# !pip install opendatasets
 import opendatasets as od
 
 od.download("https://www.kaggle.com/datasets/adityajn105/flickr8k")
@@ -28,19 +24,12 @@ od.download("https://www.kaggle.com/datasets/adityajn105/flickr8k")
 
 ## The location of the Flickr8K_ photos
 dir_Flickr_jpg = "./flickr8k/Images"
-# dir_Flickr_jpg = "/content/drive/MyDrive/colab files/flickr8k/Images"
 
 ## The location of the caption file
 dir_Flickr_text = "./flickr8k/captions.txt"
-# dir_Flickr_text = "/content/drive/MyDrive/colab files/flickr8k/captions.txt"
-
-jpgs = os.listdir(dir_Flickr_jpg)
-print("The number of jpg flies in Flicker8k: {}".format(len(jpgs)))
 
 
 # Preliminary Analysis
-
-
 df_txt = pd.read_csv(dir_Flickr_text, skiprows=1, names=["filename", "caption"])
 df_txt['caption'] = df_txt['caption'].str.lower()
 
