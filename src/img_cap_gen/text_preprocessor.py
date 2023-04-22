@@ -1,3 +1,4 @@
+import pytest
 import string
 
 # Remove punctuations..
@@ -24,7 +25,7 @@ def remove_numeric(text,printTF=False):
             text_no_numeric += " " + word
     return(text_no_numeric)
 
-
+@pytest
 def text_clean(text_original):
     text = remove_punctuation(text_original)
     text = remove_single_character(text)

@@ -17,14 +17,13 @@ def set_seed(sd=123):
     set_random_seed(sd)
 
 
+# Downloading the flickr8k dataset from kaggle (requires user and pass from kaggle account)
 import opendatasets as od
-
 od.download("https://www.kaggle.com/datasets/adityajn105/flickr8k")
 
 
 ## The location of the Flickr8K_ photos
 dir_Flickr_jpg = "./flickr8k/Images"
-
 ## The location of the caption file
 dir_Flickr_text = "./flickr8k/captions.txt"
 
@@ -37,17 +36,13 @@ df_txt['index'] = df_txt.groupby("filename").cumcount()
 
 uni_filenames = np.unique(df_txt.filename.values)
 print("The number of unique file names : {}".format(len(uni_filenames)))
-print("The distribution of the number of captions for each image:")
-Counter(Counter(df_txt.filename.values).values())
+print(f"The distribution of the number of captions for each image: {Counter(Counter(df_txt.filename.values).values())}")
 
 
 from text_preprocessor import text_clean
 
 for i, caption in enumerate(df_txt.caption.values):
     df_txt.loc[i, "caption"] = text_clean(caption)
-
-
-# In[8]:
 
 
 def df_word(df_txt):

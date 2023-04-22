@@ -1,0 +1,11 @@
+image_cap_generator/
+    __init__.py
+    main.py
+    text_preprocessor.py
+    image_preprocessor.py
+    tests/
+        __init__.py
+        test_data.py
+        test_preprocessors.py
+    pytest.ini
+    requirements.txt
