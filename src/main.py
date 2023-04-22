@@ -75,26 +75,10 @@ assert train_df.shape[0]/5 == train_df.filename.unique().size
 assert test_df.shape[0]/5 == test_df.filename.unique().size
 
 
-# # Image prepration
-# ## create features for image using InceptionV3 model
-
-# In[12]:
-
-
-from keras.applications.inception_v3 import InceptionV3, preprocess_input
-from keras.models import Model
-
-base_model = InceptionV3(weights='imagenet')
-image_model = Model(inputs = base_model.input, outputs=base_model.layers[-2].output)
-
-
-# In[13]:
-
-
-from tensorflow.keras.utils import load_img, img_to_array
-from keras.applications.inception_v3 import preprocess_input
+# Image prepration
 import glob
 import pickle
+import os
 
 train_path = dir_Flickr_jpg
 path_all_images = glob.glob(train_path + '/*jpg')
@@ -113,21 +97,10 @@ for im in path_all_images:
         print(f"{file_name} not in the directory")
     
 
-def preprocess(image_path):
-    # inception v3 excepts img in 299 * 299 * 3
-    image = load_img(image_path, target_size=(299, 299))
-    # convert the image pixels to a numpy array
-    x = img_to_array(image)
-    # Add one more dimension
-    x = np.expand_dims(x, axis = 0)
-    x = preprocess_input(x)
-    return x
+from src.inception_encoder  import InceptionEncoder
 
-def encode(image_path):
-    image = preprocess(image_path)
-    vec = image_model.predict(image, verbose=0)
-    vec_flattened = vec.flatten()
-    return vec_flattened
+# Create an instance of the InceptionV3 class
+inception = InceptionEncoder()
 
 
 train_img_feats = {}
@@ -135,10 +108,10 @@ test_img_feats = {}
 
 for image in train_img:
     file_name = os.path.basename(os.path.normpath(image))
-    train_img_feats[file_name] = encode(image)
+    train_img_feats[file_name] = inception.encode(image)
 for image in test_img:
     file_name = os.path.basename(os.path.normpath(image))
-    test_img_feats[file_name] = encode(image)
+    test_img_feats[file_name] = inception.encode(image)
 # Save the image features
 with open('train_encoder.pkl', 'wb') as f:
     pickle.dump(train_img_feats, f)
@@ -152,11 +125,7 @@ with open('test_encoder.pkl', 'wb') as f:
 #     test_img_feats = pickle.load(f)
 
 
-# # Tokenize the captions
-
-# In[14]:
-
-
+# Tokenize the captions
 from tensorflow.keras.preprocessing.text import Tokenizer
 
 # Tokenizer does not limit the number of words
