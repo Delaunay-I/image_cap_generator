@@ -4,3 +4,5 @@ pandas==2.0.0
 tensorflow==2.12.0
 opendatasets==0.1.22 
 collection==0.1.6
+scikit-learn==1.2
+glob2==0.7
