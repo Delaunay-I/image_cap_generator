@@ -7,3 +7,7 @@ collection==0.1.6
 scikit-learn==1.2
 glob2==0.7
 pytest==7.3.1
+gunicorn
+SQLALchemy
+Flask
+Flask-SQLAlchemy
