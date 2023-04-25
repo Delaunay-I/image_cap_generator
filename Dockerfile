@@ -5,6 +5,7 @@ COPY src/ tests/ web/ requirements.txt pytest.ini pyproject.toml ./
 
 # Install all the dependencies
 RUN python -m pip install --upgrade pip
+RUN apk add build-base python3-dev py-pip
 RUN pip install -r requirements.txt
 
 EXPOSE 5000
