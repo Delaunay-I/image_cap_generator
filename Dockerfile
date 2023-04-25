@@ -1,11 +1,12 @@
-FROM python:3-alpine
+FROM ubuntu:20.04
 
+RUN apt-get update && yes | apt-get upgrade
 # Bundle app source
 COPY src/ tests/ web/ requirements.txt pytest.ini pyproject.toml ./
 
 # Install all the dependencies
 RUN python -m pip install --upgrade pip
-RUN apk add build-base python3-dev py-pip
+
 RUN pip install -r requirements.txt
 
 EXPOSE 5000
