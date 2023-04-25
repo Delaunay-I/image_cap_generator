@@ -1,6 +1,13 @@
 FROM ubuntu:20.04
 
-RUN apt-get update && apt-get install -y python3.9 python3.9-dev
+RUN apt-get update && apt-get install -y software-properties-common gcc && \
+    add-apt-repository -y ppa:deadsnakes/ppa
+
+RUN apt-get update && apt-get install -y python3.8 python3-distutils python3-pip python3-apt
+
+
+RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 1
+RUN update-alternatives --set python /usr/bin/python3
 
 COPY requirements.txt .
 
