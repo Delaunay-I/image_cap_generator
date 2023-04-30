@@ -1,1 +1,2 @@
 FLASK_APP=image_cap_gen_api.py
+FLASK_DEBUG=1

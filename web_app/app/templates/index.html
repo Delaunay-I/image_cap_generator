@@ -3,7 +3,8 @@
 {% block content %}
 <h1>File Upload</h1>
 <form method="POST" action="" enctype="multipart/form-data">
-  <p><input type="file" name="file" accept="image/*"></p>
+  {{ form.csrf_token }}
+  <p><input type="file" name="image" accept="image/*"></p>
   <p><input type="submit" value="Submit"></p>
 </form>
 {% endblock %}
