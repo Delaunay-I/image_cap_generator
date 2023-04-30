@@ -2,6 +2,9 @@
 {% import 'bootstrap/wtf.html' as wtf %}
 
 {% block app_content %}
+
+    <img src="{{ url_for('upload', filename=most_recent_file) }}">
+
     <div class="row">
         <div class="col-sm-12 col-md-4 col-lg-2">
             <!-- empty -->
@@ -13,5 +16,10 @@
              <!-- empty -->
         </div>        
     </div><hr>
+
+    <hr>
+    {% for file in files %}
+      <img src="{{ url_for('upload', filename=file) }}" style="width: 64px">
+    {% endfor %}
    
 {% endblock %}
