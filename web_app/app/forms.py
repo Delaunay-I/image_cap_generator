@@ -23,7 +23,8 @@ class ImageForm(FlaskForm):
     image = FileField('image', validators=[
         FileRequired(message='File is required!'),
         FileAllowed(['jpg', 'png'], 'Images only!')
-        ])
+        ], render_kw={"accept": ".png, .jpg"}
+        )
     submit = SubmitField('Submit')
 
     def validate_image(self, image):
