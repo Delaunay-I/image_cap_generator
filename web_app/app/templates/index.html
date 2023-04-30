@@ -5,7 +5,7 @@
 <form method="POST" action="" enctype="multipart/form-data">
   {{ form.hidden_tag() }}
   <p>
-    {{ form.image }}<br>
+    {{ form.image(accept=".png, .jpg") }}<br>
     {% for error in form.image.errors %}
     <span style="color: red;">[{{ error }}]</span>
     {% endfor %}
