@@ -3,8 +3,15 @@
 {% block content %}
 <h1>File Upload</h1>
 <form method="POST" action="" enctype="multipart/form-data">
-  {{ form.csrf_token }}
-  <p><input type="file" name="image" accept="image/*"></p>
-  <p><input type="submit" value="Submit"></p>
+  {{ form.hidden_tag() }}
+  <p>
+    {{ form.image }}<br>
+    {% for error in form.image.errors %}
+    <span style="color: red;">[{{ error }}]</span>
+    {% endfor %}
+  </p>
+  <p>
+    {{ form.submit() }}
+  </p>
 </form>
 {% endblock %}
