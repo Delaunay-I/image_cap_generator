@@ -5,13 +5,14 @@ from werkzeug.utils import secure_filename
 import os
 
 
+
+
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
 def index():
     form = ImageForm()
     if request.method == 'POST':
         if form.validate_on_submit():
-            print("passed")
             uploaded_file = form.image.data
             filename = secure_filename(uploaded_file.filename)
             save_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
@@ -19,4 +20,4 @@ def index():
             return redirect(url_for('index'))
         else:
             print(form.errors)
-    return render_template('index.html', form=form)
+    return render_template('index.html', title='Home', form=form)
