@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% for message in get_flashed_messages() %}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    <strong>{{message}}</strong>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+
+{% endfor %}
+
+{% if image_file %}
+<center>
+    <img class="my-image" src="{{ url_for('upload', filename=image_file) }}">
+</center>
+{% else %}
+<center>
+  <img class="my-image" src="{{ url_for('static', filename='images/welcome_img.jpg') }}">
+</center>
+{% endif %}
+<br/>
+
+{% if caption %}
+  <blockquote class="blockquote">
+    <div class="caption-text">
+      {{ caption }}
+    </div>
+</blockquote>
+{% endif %}
+
+
+<h5>Please upload an image:</h5>
+<form method="POST" action="" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <br/>
+
+        {{ form.image(
+            class="form-control"
+        ) }}
+        <br/>
+        {{ form.submit(class="btn btn-success") }}
+</form>
+
+   
+{% endblock %}
