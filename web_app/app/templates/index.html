@@ -1,22 +1,32 @@
 {% extends "base.html" %}
-{% import 'bootstrap/wtf.html' as wtf %}
+{% from 'bootstrap5/form.html' import render_form %}
 
-{% block app_content %}
+{% block content %}
+
+{% for message in get_flashed_messages() %}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    <strong>{{message}}</strong>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+{% endfor %}
+
 <div class="centered-image">
     <img src="{{ url_for('upload', filename=most_recent_file) }}">
 </div>
 
-    <div class="row">
-        <div class="col-sm-12 col-md-4 col-lg-2">
-            <!-- empty -->
-        </div>
-        <div class="col-sm-12 col-md-4 col-lg-8">
-            {{ wtf.quick_form(form) }}             
-        </div>
-        <div class="col-sm-12 col-md-4 col-lg-2">
-             <!-- empty -->
-        </div>        
-    </div><hr>
+
+<h2>Please upload an image:</h2>
+<form method="POST" action="" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <br/>
+
+        {{ form.image(
+            class="form-control"
+        ) }}
+        <br/>
+        {{ form.submit(class="btn btn-success") }}
+</form>
+
 
    <hr>
     {% for file in files %}

@@ -34,3 +34,5 @@ class ImageForm(FlaskForm):
         # Add this check for file extension
         if content_type not in ['.jpg', '.png']:
             raise ValidationError('Images only!')
+        
+

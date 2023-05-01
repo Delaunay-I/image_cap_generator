@@ -1,5 +1,5 @@
 from app import app
-from flask import render_template, request, redirect, url_for, send_from_directory
+from flask import render_template, redirect, url_for, send_from_directory, flash
 from app.forms import ImageForm
 from werkzeug.utils import secure_filename
 import os
@@ -22,6 +22,7 @@ def upload_files():
         filename = secure_filename(uploaded_file.filename)
         save_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         uploaded_file.save(save_path)
+        flash("Image uploaded Successfully!")
         return redirect(url_for('index'))
     else:
         print(form.errors)
