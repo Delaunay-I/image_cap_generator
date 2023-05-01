@@ -10,9 +10,9 @@
 
 {% endfor %}
 
-{% if files %}
+{% if image_file %}
 <center>
-    <img class="my-image" src="{{ url_for('upload', filename=most_recent_file) }}">
+    <img class="my-image" src="{{ url_for('upload', filename=image_file) }}">
 </center>
 {% else %}
 <center>
@@ -20,7 +20,10 @@
 </center>
 {% endif %}
 <br/>
+
+{% if caption %}
 <p>{{ caption }}</p>
+{% endif %}
 
 <h4>Please upload an image:</h4>
 <form method="POST" action="" enctype="multipart/form-data">

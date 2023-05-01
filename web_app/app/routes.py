@@ -19,15 +19,16 @@ from app.tf_predict import predict_beam_search
 def index():
     form = ImageForm()
     files = os.listdir(app.config['UPLOAD_FOLDER'])
-    most_recent_file = []
+    image_file = []
     caption = None
     print(files, type(files))
     if files:
         files.sort(key=lambda x: os.path.getctime(os.path.join(app.config['UPLOAD_FOLDER'], x)), reverse=True)
-        most_recent_file = files[0]        
+        image_file = files[0] 
+        print(image_file)       
     
-    return render_template('index.html', files=files,
-     most_recent_file=most_recent_file, form=form, caption=caption)
+    return render_template('index.html',
+     image_file=image_file, form=form, caption=caption)
 
 @app.route('/', methods=['POST'])
 @app.route('/index', methods=[ 'POST'])
@@ -39,10 +40,9 @@ def upload_files():
         save_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         uploaded_file.save(save_path)
         flash("Image uploaded Successfully!")
-        img_file_path = os.path.join(app.config['UPLOAD_FOLDER'], save_path)
-        caption = predict_beam_search(img_file_path, 10, model)
+        caption = predict_beam_search(save_path, 10, model)
 
-        return render_template('index.html', caption=caption, form=form)
+        return render_template('index.html', image_file=filename, caption=caption, form=form)
     else:
         print(form.errors)
     return redirect(url_for('index'))
