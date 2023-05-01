@@ -22,10 +22,15 @@
 <br/>
 
 {% if caption %}
-<p>{{ caption }}</p>
+  <blockquote class="blockquote">
+    <div class="caption-text">
+      {{ caption }}
+    </div>
+</blockquote>
 {% endif %}
 
-<h4>Please upload an image:</h4>
+
+<h5>Please upload an image:</h5>
 <form method="POST" action="" enctype="multipart/form-data">
         {{ form.hidden_tag() }}
         <br/>

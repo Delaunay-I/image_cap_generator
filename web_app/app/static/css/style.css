@@ -19,3 +19,11 @@ h1 {
 body {
     background: #f4f4f4;
 }
+
+.caption-text {
+    font-size: 30px;
+    color: navy;
+    font-family: cursive;
+    font-style: italic;
+    text-align: center;
+}
