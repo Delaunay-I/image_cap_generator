@@ -24,10 +24,7 @@ def index():
     print(files, type(files))
     if files:
         files.sort(key=lambda x: os.path.getctime(os.path.join(app.config['UPLOAD_FOLDER'], x)), reverse=True)
-        most_recent_file = files[0]
-        print(most_recent_file)
-        img_file_path = os.path.join(app.config['UPLOAD_FOLDER'], most_recent_file)
-        caption = predict_beam_search(img_file_path, 10, model)
+        most_recent_file = files[0]        
     
     return render_template('index.html', files=files,
      most_recent_file=most_recent_file, form=form, caption=caption)
@@ -42,8 +39,10 @@ def upload_files():
         save_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         uploaded_file.save(save_path)
         flash("Image uploaded Successfully!")
+        img_file_path = os.path.join(app.config['UPLOAD_FOLDER'], save_path)
+        caption = predict_beam_search(img_file_path, 10, model)
 
-        return redirect(url_for('index'))
+        return render_template('index.html', caption=caption, form=form)
     else:
         print(form.errors)
     return redirect(url_for('index'))

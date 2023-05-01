@@ -21,7 +21,8 @@
 {% endif %}
 <br/>
 <p>{{ caption }}</p>
-<h2>Please upload an image:</h2>
+
+<h4>Please upload an image:</h4>
 <form method="POST" action="" enctype="multipart/form-data">
         {{ form.hidden_tag() }}
         <br/>
@@ -33,10 +34,5 @@
         {{ form.submit(class="btn btn-success") }}
 </form>
 
-
-   <hr>
-    {% for file in files %}
-      <img src="{{ url_for('upload', filename=file) }}" style="width: 64px">
-    {% endfor %} 
    
 {% endblock %}
