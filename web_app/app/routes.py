@@ -11,7 +11,7 @@ def index():
     form = ImageForm()
     files = os.listdir(app.config['UPLOAD_FOLDER'])
     files.sort(key=lambda x: os.path.getctime(os.path.join(app.config['UPLOAD_FOLDER'], x)), reverse=True)
-    return render_template('index.html', files=files, most_recent_file=files[0], form=form)
+    return render_template('index.html', files=files[:5], most_recent_file=files[0], form=form)
 
 @app.route('/', methods=['POST'])
 @app.route('/index', methods=[ 'POST'])
