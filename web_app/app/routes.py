@@ -3,6 +3,15 @@ from flask import render_template, redirect, url_for, send_from_directory, flash
 from app.forms import ImageForm
 from werkzeug.utils import secure_filename
 import os
+import tensorflow as tf
+
+
+model_name = "base_imgCap_model.h5"
+model_path = os.path.join(app.config['BASEDIR'], 'tf_files', model_name)
+model = tf.keras.models.load_model(model_path)
+
+from app.tf_predict import predict_beam_search
+
 
 
 @app.route('/')
@@ -10,8 +19,18 @@ import os
 def index():
     form = ImageForm()
     files = os.listdir(app.config['UPLOAD_FOLDER'])
-    files.sort(key=lambda x: os.path.getctime(os.path.join(app.config['UPLOAD_FOLDER'], x)), reverse=True)
-    return render_template('index.html', files=files[:5], most_recent_file=files[0], form=form)
+    most_recent_file = []
+    caption = None
+    print(files, type(files))
+    if files:
+        files.sort(key=lambda x: os.path.getctime(os.path.join(app.config['UPLOAD_FOLDER'], x)), reverse=True)
+        most_recent_file = files[0]
+        print(most_recent_file)
+        img_file_path = os.path.join(app.config['UPLOAD_FOLDER'], most_recent_file)
+        caption = predict_beam_search(img_file_path, 10, model)
+    
+    return render_template('index.html', files=files,
+     most_recent_file=most_recent_file, form=form, caption=caption)
 
 @app.route('/', methods=['POST'])
 @app.route('/index', methods=[ 'POST'])
@@ -23,6 +42,7 @@ def upload_files():
         save_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         uploaded_file.save(save_path)
         flash("Image uploaded Successfully!")
+
         return redirect(url_for('index'))
     else:
         print(form.errors)

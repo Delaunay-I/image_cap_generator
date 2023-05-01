@@ -7,13 +7,20 @@
     <strong>{{message}}</strong>
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
   </div>
+
 {% endfor %}
 
-<div class="centered-image">
-    <img src="{{ url_for('upload', filename=most_recent_file) }}">
-</div>
-
-
+{% if files %}
+<center>
+    <img class="my-image" src="{{ url_for('upload', filename=most_recent_file) }}">
+</center>
+{% else %}
+<center>
+  <img class="my-image" src="{{ url_for('static', filename='images/welcome_img.jpg') }}">
+</center>
+{% endif %}
+<br/>
+<p>{{ caption }}</p>
 <h2>Please upload an image:</h2>
 <form method="POST" action="" enctype="multipart/form-data">
         {{ form.hidden_tag() }}
