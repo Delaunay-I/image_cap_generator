@@ -9,5 +9,7 @@ glob2==0.7
 pytest==7.3.1
 gunicorn
 SQLALchemy
-Flask
-Flask-SQLAlchemy
+Flask==2.2.3
+Flask-WTF==1.1.1
+Flask-SQLAlchemy==2.5.1
+Pillow==9.4.0
