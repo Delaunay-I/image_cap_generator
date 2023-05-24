@@ -6,8 +6,7 @@ WORKDIR /app
 
 COPY requirements_docker.txt .
 
-RUN pip install --upgrade pip && \
-    pip install -r requirements_docker.txt
+RUN pip install --upgrade pip && pip install -r requirements_docker.txt
 
 
 # Bundle app source
