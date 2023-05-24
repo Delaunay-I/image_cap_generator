@@ -1,26 +1,19 @@
 # syntax=docker/dockerfile:1
 
-FROM ubuntu:20.04
+FROM python:3.8-slim
 
-RUN apt-get update && apt-get install -y software-properties-common gcc && \
-    add-apt-repository -y ppa:deadsnakes/ppa
+WORKDIR /app
 
-RUN apt-get update && apt-get install -y python3.8 python3-distutils python3-pip python3-apt
+COPY requirements_docker.txt .
 
+RUN pip install --upgrade pip && \
+    pip install -r requirements_docker.txt
 
-RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 1
-RUN update-alternatives --set python /usr/bin/python3
-
-COPY requirements.txt .
-
-# Install all the dependencies
-RUN python -m pip install --upgrade pip
-RUN pip install -r requirements.txt
 
 # Bundle app source
 COPY web_app /app/web_app
 
 WORKDIR /app/web_app
 
-EXPOSE 8000
+EXPOSE 5000
 CMD gunicorn -c gunicorn_config.py app:app
