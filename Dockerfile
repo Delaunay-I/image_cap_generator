@@ -18,7 +18,9 @@ RUN python -m pip install --upgrade pip
 RUN pip install -r requirements.txt
 
 # Bundle app source
-COPY  web_app/ ./
+COPY web_app /app/web_app
 
-EXPOSE 5000
-CMD flask run --host 0.0.0.0 --port 5000
+WORKDIR /app/web_app
+
+EXPOSE 8000
+CMD gunicorn -c gunicorn_config.py app:app
